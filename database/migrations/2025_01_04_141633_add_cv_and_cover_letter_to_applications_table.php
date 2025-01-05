@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('job_offers', function (Blueprint $table) {
-            $table->foreignId('recruiter_id')->constrained('users');
+        Schema::table('applications', function (Blueprint $table) {
+            $table->string('cv_path')->nullable();
+            $table->string('cover_letter_path')->nullable();
         });
+        
     }
 
     /**
@@ -21,8 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('job_offers', function (Blueprint $table) {
-            $table->dropColumn('recruiter_id');
+        Schema::table('applications', function (Blueprint $table) {
+            //
         });
     }
 };

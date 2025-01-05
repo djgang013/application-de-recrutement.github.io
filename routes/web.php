@@ -18,6 +18,7 @@ Route::get('/guest', [JobOfferController::class, 'index'])->name('guest.jobs');
 Route::middleware('auth')->group(function () {
     // Dashboard route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('job-offers', [JobOfferController::class, 'index'])->name('job-offers.index');
 
     // Logout route
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

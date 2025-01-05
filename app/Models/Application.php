@@ -12,7 +12,9 @@ class Application extends Model
     protected $fillable = [
         'user_id',
         'job_offer_id',
-        'status'
+        'status',
+        'cv_path',
+        'cover_letter_path',
     ];
 
     protected $attributes = [

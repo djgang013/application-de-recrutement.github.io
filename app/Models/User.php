@@ -14,6 +14,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        
     ];
 
     protected $hidden = [
@@ -46,4 +47,15 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(JobOffer::class, Application::class, 'user_id', 'id', 'id', 'job_offer_id');
     }
+    // In App\Models\User
+
+public function isRecruiter()
+{
+    return $this->role === 'recruteur';
+
+}
+public function isCandidat()
+{
+    return $this->role === 'candidat';
+}
 }

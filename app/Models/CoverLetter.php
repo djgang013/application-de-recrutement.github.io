@@ -10,7 +10,7 @@ class CoverLetter extends Model
     use HasFactory;
 
     // Add 'title' to the fillable array to allow mass assignment
-    protected $fillable = ['title', 'file_path', 'user_id'];
+    protected $fillable = ['title','content', 'file_path', 'user_id'];
 
     // Define the relationship with the User model
     public function user()

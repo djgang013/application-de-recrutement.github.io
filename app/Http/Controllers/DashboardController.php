@@ -18,7 +18,7 @@ class DashboardController extends Controller
 
         if ($user->role == 'recruteur') {
             // Show the dashboard for the recruteur
-            return view('dashboard.recruteur', compact('user'));
+            return redirect()->route('job-offers.index');
         }
 
         // Default case if role doesn't match (optional)

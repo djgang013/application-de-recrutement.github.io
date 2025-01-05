@@ -16,38 +16,49 @@ class ApplicationController extends Controller
 
     public function apply(Request $request, $jobOfferId)
     {
-        // Ensure only candidates can apply
         if (Auth::user()->role !== 'candidat') {
-            return redirect()->back()->with('error', 'Seuls les candidats peuvent postuler aux offres d\'emploi.');
+            return redirect()->back()->with('error', 'Seuls les candidats peuvent postuler.');
         }
-
-        try {
-            $jobOffer = JobOffer::findOrFail($jobOfferId);
-
-            // Check if the user has already applied
-            $existingApplication = Application::where('user_id', Auth::id())
-                ->where('job_offer_id', $jobOfferId)
-                ->first();
-
-            if ($existingApplication) {
-                return redirect()->back()->with('error', 'Vous avez déjà postulé à cette offre d\'emploi.');
-            }
-
-            // Create the application with initial pending status
-            Application::create([
-                'user_id' => Auth::id(),
-                'job_offer_id' => $jobOfferId,
-                'status' => 'pending'
-            ]);
-
-            return redirect()->route('jobs.index')
-                ->with('success', 'Votre candidature a été soumise avec succès!');
-
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('error', 'Une erreur est survenue lors de la soumission de votre candidature.');
+    
+        // Fetch the job offer to ensure it exists and use it in the check
+        $jobOffer = JobOffer::find($jobOfferId);
+    
+        if (!$jobOffer) {
+            return redirect()->back()->with('error', 'Cette offre d\'emploi n\'existe pas.');
         }
+    
+        // Check if the candidate has already applied for this job
+        $existingApplication = Application::where('user_id', Auth::id())
+                                          ->where('job_offer_id', $jobOfferId)
+                                          ->first();
+    
+        if ($existingApplication) {
+            return redirect()->back()->with('error', 'Vous avez déjà postulé à cette offre.');
+        }
+    
+        // Validate the request
+        $request->validate([
+            'cover_letter' => 'required|mimes:pdf,doc,docx|max:2048'
+        ]);
+    
+        // Store the cover letter if provided
+        $coverLetterPath = null;
+        if ($request->hasFile('cover_letter')) {
+            $coverLetterPath = $request->file('cover_letter')->store('cover_letters', 'public');
+        }
+    
+        // Create the new application
+        Application::create([
+            'user_id' => Auth::id(),
+            'job_offer_id' => $jobOfferId,
+            'status' => 'pending',
+            'cv_path' => Auth::user()->cv_path,  // Link existing CV
+            'cover_letter_path' => $coverLetterPath,
+        ]);
+    
+        return redirect()->route('jobs.index')->with('success', 'Candidature soumise avec succès!');
     }
+    
 
     public function index()
 {

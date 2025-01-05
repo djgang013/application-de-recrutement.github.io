@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applications List</title>
     <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
         /* Table styling */
         table {
             width: 100%;
@@ -53,7 +75,9 @@
         .badge-danger {
             background-color: #f44336;
         }
-          a{
+
+        /* Action link styling */
+        a {
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
@@ -61,9 +85,16 @@
             border-radius: 5px;
             font-size: 1rem;
             cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
             width: 100%;
-            
-          }
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+
         /* Form styling */
         form {
             margin: 0;
@@ -100,6 +131,10 @@
             th, td {
                 padding: 10px 12px;
             }
+
+            a {
+                width: auto;
+            }
         }
     </style>
 </head>
@@ -114,6 +149,8 @@
                 <th>Status</th>
                 <th>Date de la candidature</th>
                 <th>Modifier le statut</th>
+                <th>CV</th>
+                <th>Lettre</th>
             </tr>
         </thead>
         <tbody>
@@ -138,10 +175,24 @@
                             </select>
                         </form>
                     </td>
+                    <td>
+                        @if($application->cv_path)
+                            <a href="{{ asset('storage/' . $application->cv_path) }}">Télécharger CV</a>
+                        @else
+                            Pas de CV
+                        @endif
+                    </td>
+                    <td>
+                        @if($application->cover_letter_path)
+                            <a href="{{ asset('storage/' . $application->cover_letter_path) }}">Télécharger Lettre</a>
+                        @else
+                            Pas de lettre
+                        @endif
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="text-center">Aucune candidature trouvée.</td>
+                    <td colspan="7" class="text-center">Aucune candidature trouvée.</td>
                 </tr>
             @endforelse
         </tbody>

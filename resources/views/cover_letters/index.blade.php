@@ -102,6 +102,10 @@
             @endforeach
         </ul>
     @endif
+    @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
 
     <div class="button-container">
         <a href="{{ route('cover-letters.create') }}" class="logout-btn">Ajouter une nouvelle lettre</a>

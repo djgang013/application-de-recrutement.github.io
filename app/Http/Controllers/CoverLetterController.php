@@ -19,27 +19,25 @@ class CoverLetterController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'file_path' => 'required|file|mimes:pdf,doc,docx', // Add file validation
-        ]);
-    
-        // Upload the file
-        if ($request->hasFile('file_path')) {
-            $filePath = $request->file('file_path')->store('cover_letters');
-            $validated['file_path'] = $filePath;
-        }
-    
-        // Create the cover letter
-        $coverLetter = new CoverLetter($validated);
-        $coverLetter->user_id = auth()->id();  // Assuming a user is logged in
-        $coverLetter->save();
-    
-        return redirect()->route('cover-letters.index')->with('success', 'Lettre de motivation ajoutée avec succès!');
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'file_path' => 'required|file|mimes:pdf,doc,docx|max:2048',
+    ]);
+
+    if ($request->hasFile('file_path')) {
+        $filePath = $request->file('file_path')->store('cover_letters');
+        $validated['file_path'] = $filePath;
     }
-    
+
+    $coverLetter = new CoverLetter($validated);
+    $coverLetter->user_id = auth()->id();
+    $coverLetter->save();
+
+    return redirect()->route('cover-letters.index')->with('success', 'Lettre de motivation ajoutée avec succès!');
+}
+
     public function update(Request $request, CoverLetter $coverLetter)
     {
         $validated = $request->validate([

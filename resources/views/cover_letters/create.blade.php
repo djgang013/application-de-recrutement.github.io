@@ -71,17 +71,21 @@
 <body>
     <h1>Ajouter Lettre de Motivation</h1>
 
-    <form action="{{ route('cover-letters.store') }}" method="POST">
+    <form action="{{ route('cover-letters.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-
+    
         <label for="title">Titre de la lettre:</label>
         <input type="text" name="title" id="title" value="{{ old('title') }}" required>
-
+    
         <label for="content">Contenu de la lettre:</label>
         <textarea name="content" id="content" rows="6" required>{{ old('content') }}</textarea>
-
+    
+        <label for="file_path">Fichier (PDF, DOC, DOCX):</label>
+        <input type="file" name="file_path" id="file_path" required>
+    
         <button type="submit">Envoyer</button>
     </form>
+    
 
     
     <a href="{{ route('dashboard') }}">Retour au tableau de bord</a>
