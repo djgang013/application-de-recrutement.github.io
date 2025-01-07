@@ -321,17 +321,24 @@
             <a href="{{ route('dashboard') }}" class="navbar-brand">JobBoard</a>
             <button class="mobile-menu-button">☰</button>
             <div class="navbar-links">
+                @if (auth()->check() && auth()->user()->role == 'candidate')
+                
+@endif
+
                 @auth
                     @if(auth()->user()->role == 'recruteur')
                         <a href="{{ route('job-offers.create') }}">Ajouter une offre</a>
                         <a href="{{ route('applications.index') }}">Candidatures</a>
                     @endif
                     @if(auth()->user()->role !== 'recruteur')
-                    <a href="{{ route('dashboard') }}">Tableau de bord</a>
+                    <a href="{{ route('candidate.applications') }}">My Applications</a>
+                    
+                    <a href="{{route('cvs.create')}}">ajouter votre cv</a>
+                    <a href="{{ route('cover-letters.index') }}">Lettres de motivation</a>
                     @endif
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                         @csrf
-                        <button type="submit" style="background: none; border: none; color: white; cursor: pointer; font-weight: 500;">
+                        <button type="submit" >
                             Se déconnecter
                         </button>
                     </form>
@@ -376,6 +383,10 @@
                             <div class="form-group">
                                 <label for="cover_letter">Lettre de motivation</label>
                                 <input type="file" name="cover_letter" id="cover_letter" class="form-control" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="cv">Curriculum Vitae</label>
+                                <input type="file" name="cv" id="cv" class="form-control" accept=".pdf">
                             </div>
                             <button type="submit">Postuler</button>
                         </form>

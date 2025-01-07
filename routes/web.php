@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CVController;
-use App\Http\Controllers\JobController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobOfferController;
+use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CoverLetterController;
@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
     // Dashboard route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('job-offers', [JobOfferController::class, 'index'])->name('job-offers.index');
-
+    Route::get('job-offers', [JobOfferController::class, 'index'])->name('job-offers.index');
     // Logout route
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
@@ -40,6 +40,16 @@ Route::middleware('auth')->group(function () {
        
 Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
 Route::post('job-offers/apply/{jobOfferId}', [ApplicationController::class, 'apply'])->name('job-offers.apply');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-applications', [CandidateController::class, 'myApplications'])->name('candidate.applications');
+});
+
+Route::get('/applications/{application}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
+Route::put('/applications/{application}', [ApplicationController::class, 'update'])->name('applications.update');
+
+
 
 
 

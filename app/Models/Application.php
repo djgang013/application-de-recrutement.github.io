@@ -21,13 +21,14 @@ class Application extends Model
         'status' => 'pending'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    
 
     public function jobOffer()
     {
-        return $this->belongsTo(JobOffer::class);
+        return $this->belongsTo(JobOffer::class,'job_offer_id');
     }
+    public function user()
+{
+    return $this->belongsTo(User::class, 'user_id'); // Linking the user to the application
+}
 }

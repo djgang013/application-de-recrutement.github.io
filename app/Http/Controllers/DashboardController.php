@@ -13,7 +13,10 @@ class DashboardController extends Controller
         // Check user role and redirect or display specific data accordingly
         if ($user->role == 'candidat') {
             // Show the dashboard for the candidate
-            return view('dashboard.candidat', compact('user'));
+          
+            $jobOffers = \App\Models\JobOffer::all();  // Adjust query based on your logic
+        
+        return view('job_offers.index', compact('user', 'jobOffers'));
         }
 
         if ($user->role == 'recruteur') {
