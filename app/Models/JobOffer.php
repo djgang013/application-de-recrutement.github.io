@@ -14,6 +14,7 @@ class JobOffer extends Model
         'location',
         'company',
         'salary',
+        'image',
         'user_id', // Add user_id here
         'recruiter_id',
     ];

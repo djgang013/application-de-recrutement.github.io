@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter une Offre d'Emploi</title>
+    <title>Create Job Posting</title>
     <style>
-        /* Reset and Base Styles */
+        :root {
+            --primary: #004085;
+            --primary-dark: #002752;
+            --success: #28a745;
+            --success-hover: #218838;
+            --gray-50: #f8f9fa;
+            --gray-100: #e9ecef;
+            --gray-200: #dee2e6;
+            --gray-400: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,127 +26,193 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7fc;
-            margin: 0;
-            padding: 0;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
         }
 
-        h1 {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
+        .page-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
             text-align: center;
-            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .page-subtitle {
+            color: var(--gray-600);
+            font-size: 1rem;
         }
 
         .form-container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 30px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
+        .form-section {
+            margin-bottom: 2rem;
         }
 
-        label {
-            margin-bottom: 10px;
-            font-size: 1rem;
-            color: #333;
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        input[type="text"], textarea, input[type="file"] {
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-800);
+        }
+
+        .form-input,
+        .form-textarea {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
+            padding: 0.875rem;
+            border: 1px solid var(--gray-200);
             border-radius: 5px;
             font-size: 1rem;
-            box-sizing: border-box;
+            background: var(--gray-50);
         }
 
-        textarea {
-            resize: vertical;
-            height: 150px;
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: var(--primary);
+            outline: none;
         }
 
-        button, a {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
+        .form-textarea {
+            min-height: 150px;
+        }
+
+        .file-input-container {
+            margin-top: 0.5rem;
+        }
+
+        .file-input {
+            padding: 1rem;
+            border: 2px dashed var(--gray-400);
+            text-align: center;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 0.875rem 1.5rem;
             border: none;
             border-radius: 5px;
             font-size: 1rem;
-            text-align: center;
             cursor: pointer;
-            display: block;
-            width: 100%;
-            margin-top: 10px;
-            text-decoration: none;
+            transition: background-color 0.3s;
         }
 
-        button:hover, a:hover {
-            background-color: #45a049;
+        .btn-primary {
+            background: var(--success);
+            color: white;
         }
 
-        /* Button and link in the same style */
-        a {
-            background-color: #007BFF;
-            margin-top: 10px;
+        .btn-primary:hover {
+            background: var(--success-hover);
         }
 
-        a:hover {
-            background-color: #0056b3;
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-800);
         }
 
-        /* Responsive adjustments */
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+
+        .input-hint {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8rem;
-                padding: 15px;
+            .button-group {
+                flex-direction: column;
+                gap: 1rem;
             }
 
-            .form-container {
-                width: 90%;
-                padding: 20px;
+            .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <h1>Ajouter une Offre d'Emploi</h1>
+    <div class="page-container">
+        <div class="page-header">
+            <h1 class="page-title">Create Job Posting</h1>
+            <p class="page-subtitle">Fill in the details to create a new job opportunity</p>
+        </div>
 
-    <div class="form-container">
-        <form action="{{ route('job-offers.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <div class="form-container">
+            <form action="{{ route('job-offers.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-            <label for="title">Titre de l'offre:</label>
-            <input type="text" name="title" id="title" required><br>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="form-label" for="title">Job Title</label>
+                        <input type="text" name="title" id="title" class="form-input" required placeholder="e.g. Senior Software Engineer">
+                    </div>
 
-            <label for="description">Description:</label>
-            <textarea name="description" id="description" required></textarea><br>
+                    <div class="form-group">
+                        <label class="form-label" for="company">Company Name</label>
+                        <input type="text" name="company" id="company" class="form-input" required placeholder="e.g. Tech Solutions Inc.">
+                    </div>
 
-            <label for="location">Lieu:</label>
-            <input type="text" name="location" id="location" required><br>
+                    <div class="form-group">
+                        <label class="form-label" for="location">Location</label>
+                        <input type="text" name="location" id="location" class="form-input" required placeholder="e.g. Paris, France">
+                    </div>
 
-            <label for="company">Entreprise:</label>
-            <input type="text" name="company" id="company" required><br>
+                    <div class="form-group">
+                        <label class="form-label" for="salary">Salary Range</label>
+                        <input type="text" name="salary" id="salary" class="form-input" placeholder="e.g. €45,000 - €60,000 per year">
+                        <p class="input-hint">Leave blank if you prefer not to disclose</p>
+                    </div>
+                </div>
 
-            <label for="salary">Salaire:</label>
-            <input type="text" name="salary" id="salary"><br>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="form-label" for="description">Job Description</label>
+                        <textarea name="description" id="description" class="form-textarea" required placeholder="Describe the role, responsibilities, requirements, and benefits..."></textarea>
+                    </div>
 
-            <label for="image">Image de l'offre (optionnelle):</label>
-            <input type="file" name="image" id="image" accept="image/*"><br>
+                    <div class="form-group">
+                        <label class="form-label" for="image">Company Logo or Featured Image</label>
+                        <div class="file-input-container">
+                            <input type="file" name="image" id="image" class="file-input" accept="image/*">
+                        </div>
+                        <p class="input-hint">Recommended: Square image, minimum 400x400 pixels</p>
+                    </div>
+                </div>
 
-            <button type="submit">Ajouter l'Offre</button>
-            <a href="{{ route('dashboard') }}" class="return-link">Retour au tableau de bord</a>
-        </form>
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Publish Job Posting</button>
+                    <a href="{{ route('dashboard') }}" class="btn btn-secondary">Return to Dashboard</a>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

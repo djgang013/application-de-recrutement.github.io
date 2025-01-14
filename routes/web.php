@@ -16,6 +16,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.po
 Route::get('/guest', [JobOfferController::class, 'index'])->name('guest.jobs');
 
 Route::middleware('auth')->group(function () {
+   
     // Dashboard route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('job-offers', [JobOfferController::class, 'index'])->name('job-offers.index');
@@ -27,6 +28,8 @@ Route::middleware('auth')->group(function () {
 // Routes for Candidat (role: candidat)
 Route::middleware('auth')->group(function () {
     Route::middleware('role:candidat')->group(function () {
+        
+        
         Route::resource('cvs', CVController::class);
         Route::resource('cover-letters', CoverLetterController::class);
         Route::get('job-offers.index', [JobOfferController::class, 'index'])->name('jobs.index');
@@ -40,10 +43,15 @@ Route::middleware('auth')->group(function () {
        
 Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
 Route::post('job-offers/apply/{jobOfferId}', [ApplicationController::class, 'apply'])->name('job-offers.apply');
+Route::get('/job-offers/{jobOffer}', [JobOfferController::class, 'show'])
+        ->where('jobOffer', '[0-9]+') // Only allow numeric jobOffer IDs
+        ->name('job-offers.show');
 
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/my-applications', [CandidateController::class, 'myApplications'])->name('candidate.applications');
+    
+
 });
 
 Route::get('/applications/{application}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
@@ -59,9 +67,11 @@ Route::put('/applications/{application}', [ApplicationController::class, 'update
 // Routes for Recruteur (role: recruteur)
 Route::middleware('auth')->group(function () {
     Route::middleware('role:recruteur')->group(function () {
+        
         Route::resource('job-offers', JobOfferController::class)->except(['index']);
         Route::get('job-offers/create', [JobOfferController::class, 'create'])->name('job-offers.create');
         Route::post('job-offers', [JobOfferController::class, 'store'])->name('job-offers.store');
+     
         Route::get('job-offers', [JobOfferController::class, 'index'])->name('job-offers.index');
         Route::resource('job-offers', JobOfferController::class)->except(['show', 'edit', 'update']);
         Route::delete('job-offers/{jobOffer}', [JobOfferController::class, 'destroy'])->name('job-offers.destroy');
@@ -71,6 +81,10 @@ Route::put('job-offers/{jobOffer}', [JobOfferController::class, 'update'])->name
 Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
 Route::patch('/applications/{application}/update-status', [ApplicationController::class, 'updateStatus'])->name('applications.update-status');
 
+Route::delete('/applications/{application}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
+
+
     });
     
 });
+

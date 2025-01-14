@@ -3,248 +3,247 @@
 @section('title', 'Register')
 
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Glassmorphism Register Form Tutorial in HTML CSS</title>
+<style>
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #3b82f6;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --error: #ef4444;
+}
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <!-- Stylesheet -->
-    <style media="screen">
-        /* General Reset */
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
+body {
+    background-color: var(--gray-50);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-        body {
-            background-color: #080710;
-        }
+.register-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
 
-        .background {
-            width: 430px;
-            height: 520px;
-            position: absolute;
-            transform: translate(-50%, -50%);
-            left: 50%;
-            top: 50%;
-        }
+.register-card {
+    background: white;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 2.5rem;
+}
 
-        .background .shape {
-            height: 200px;
-            width: 200px;
-            position: absolute;
-            border-radius: 50%;
-        }
+.register-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
 
-        .shape:first-child {
-            background: linear-gradient(#1845ad, #23a2f6);
-            left: -80px;
-            top: -80px;
-        }
+.register-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.75rem;
+}
 
-        .shape:last-child {
-            background: linear-gradient(to right, #ff512f, #f09819);
-            right: -30px;
-            bottom: -80px;
-        }
+.register-subtitle {
+    color: var(--gray-600);
+    font-size: 1rem;
+}
 
-        form {
-            width: 400px;
-            background-color: rgba(255, 255, 255, 0.13);
-            position: absolute;
-            transform: translate(-50%, -50%);
-            top: 50%;
-            left: 50%;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-            padding: 50px 35px;
-        }
+.form-group {
+    margin-bottom: 1.5rem;
+    width: 90%;
+}
 
-        form * {
-            font-family: 'Poppins', sans-serif;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            outline: none;
-            border: none;
-        }
+.form-label {
+    display: block;
+    color: var(--gray-700);
+    font-size: 0.938rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
 
-        form h3 {
-            font-size: 32px;
-            font-weight: 500;
-            line-height: 42px;
-            text-align: center;
-        }
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 0.5rem;
+    font-size: 0.938rem;
+    color: var(--gray-800);
+    background-color: white;
+    transition: all 0.2s ease;
+}
 
-        label {
-            display: block;
-            margin-top: 30px;
-            font-size: 16px;
-            font-weight: 500;
-        }
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
 
-        input {
-            display: block;
-            height: 50px;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.07);
-            border-radius: 3px;
-            padding: 0 10px;
-            margin-top: 8px;
-            font-size: 14px;
-            font-weight: 300;
-        }
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
 
-        ::placeholder {
-            color: #e5e5e5;
-        }
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
 
-        button {
-            margin-top: 50px;
-            width: 100%;
-            background-color: #ffffff;
-            color: #080710;
-            padding: 15px 0;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    margin-top: 1rem;
+    width: 90%;
+}
 
-        .social {
-            margin-top: 30px;
-            display: flex;
-        }
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
 
-        .social div {
-            background: red;
-            width: 150px;
-            border-radius: 3px;
-            padding: 5px 10px 10px 5px;
-            background-color: rgba(255, 255, 255, 0.27);
-            color: #eaf0fb;
-            text-align: center;
-        }
+.login-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.938rem;
+    color: var(--gray-600);
+}
 
-        .social div:hover {
-            background-color: rgba(255, 255, 255, 0.47);
-        }
+.login-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 0.25rem;
+}
 
-        .social .fb {
-            margin-left: 25px;
-        }
+.login-link a:hover {
+    text-decoration: underline;
+}
 
-        .social i {
-            margin-right: 4px;
-        }
+.alert-error {
+    background-color: #fef2f2;
+    border: 1px solid #fee2e2;
+    color: var(--error);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+}
 
-        label[for="role"] {
-            display: block;
-            margin-top: 30px;
-            font-size: 16px;
-            font-weight: 500;
-            color: #ffffff; /* White color for the label */
-        }
+@media (max-width: 640px) {
+    .register-card {
+        padding: 1.5rem;
+    }
+}
+</style>
 
-        select#role {
-            display: block;
-            height: 50px;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.07); /* Light transparent background */
-            border-radius: 3px;
-            padding: 0 10px;
-            margin-top: 8px;
-            font-size: 14px;
-            font-weight: 300;
-            color: #e5e5e5; /* Light gray text for options */
-            border: 1px solid rgba(255, 255, 255, 0.3); /* Border with slight transparency */
-        }
-
-        select#role option {
-            background-color: #080710; /* Dark background color for the options */
-            color: #ffffff; /* White text color for options */
-        }
-
-        select#role option:hover {
-            background-color: #23a2f6; /* Highlight color when hovering over options */
-            color: #080710; /* Change text color to dark when hovering */
-        }
-
-        /* Login Link Styles */
-        .login-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .login-link a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 400;
-        }
-        .login-link a:hover {
-            text-decoration: underline;
-        }
-
-        .alert {
-            background-color: #f44336;
-            color: white;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            text-align: center;
-        }
-        
-    </style>
-</head>
-<body>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-    <form action="{{ route('register.post') }}" method="POST">
-        @csrf
-        <h3>Create Account</h3>
+<div class="register-container">
+    <div class="register-card">
+        <div class="register-header">
+            <h1 class="register-title">Create Account</h1>
+            <p class="register-subtitle">Fill in your details to get started</p>
+        </div>
 
         @if ($errors->any())
-            <div class="alert">
-                    @foreach ($errors->all() as $error)
-                        {{ $error }}
-                    @endforeach
+            <div class="alert-error">
+                @foreach ($errors->all() as $error)
+                    {{ $error }}
+                @endforeach
             </div>
         @endif
 
-<label for="name">Full Name</label>
-<input type="text" placeholder="Enter your name" id="name" name="name" value="{{ old('name') }}" required>
+        <form action="{{ route('register.post') }}" method="POST">
+            @csrf
+            
+            <div class="form-group">
+                <label class="form-label" for="name">Full Name</label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    class="form-input" 
+                    placeholder="Enter your full name"
+                    value="{{ old('name') }}" 
+                    required
+                >
+            </div>
 
-<label for="email">Email</label>
-<input type="email" placeholder="Enter your email" id="email" name="email" value="{{ old('email') }}" required>
+            <div class="form-group">
+                <label class="form-label" for="email">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input" 
+                    placeholder="Enter your email"
+                    value="{{ old('email') }}" 
+                    required
+                >
+            </div>
 
-<label for="password">Password</label>
-<input type="password" placeholder="Enter your password" id="password" name="password" required>
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-input" 
+                    placeholder="Create a password"
+                    required
+                >
+            </div>
 
-<label for="password_confirmation">Confirm Password</label>
-<input type="password" placeholder="Confirm your password" id="password_confirmation" name="password_confirmation" required>
+            <div class="form-group">
+                <label class="form-label" for="password_confirmation">Confirm Password</label>
+                <input 
+                    type="password" 
+                    id="password_confirmation" 
+                    name="password_confirmation" 
+                    class="form-input" 
+                    placeholder="Confirm your password"
+                    required
+                >
+            </div>
 
-<label for="role">Role</label>
-<select id="role" name="role" required>
-    <option value="candidat">Candidat</option>
-    <option value="recruteur">Recruteur</option>
-</select>
+            <div class="form-group">
+                <label class="form-label" for="role">Account Type</label>
+                <select id="role" name="role" class="form-select" required>
+                    <option value="candidat">Candidate</option>
+                    <option value="recruteur">Recruiter</option>
+                </select>
+            </div>
 
-<button type="submit">Register</button>
+            <button type="submit" class="btn btn-primary">
+                Create Account
+            </button>
 
-<!-- Login Link -->
-<div class="login-link">
-    <p>Already have an account? <a href="{{ route('login') }}">Login here</a></p>
+            <div class="login-link">
+                Already have an account?
+                <a href="{{ route('login') }}">Sign in</a>
+            </div>
+        </form>
+    </div>
 </div>
-</form>
-</body>
-</html>
-
 @endsection

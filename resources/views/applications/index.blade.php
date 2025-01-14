@@ -3,200 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Applications List</title>
+    <title>Liste des Candidatures</title>
     <style>
-        /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7fc;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-
-        /* Table styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        /* Header styling */
-        th {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 1.1rem;
-        }
-
-        /* Row styling */
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        /* Badge styling for status */
-        .badge {
-            padding: 5px 10px;
-            font-size: 0.9rem;
-            border-radius: 15px;
-            color: white;
-            text-transform: capitalize;
-        }
-
-        .badge-warning {
-            background-color: #ff9800;
-        }
-
-        .badge-success {
-            background-color: #4caf50;
-        }
-
-        .badge-danger {
-            background-color: #f44336;
-        }
-
-        /* Action link styling */
-        a {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            width: 100%;
-        }
-
-        a:hover {
-            background-color: #45a049;
-        }
-
-        /* Form styling */
-        form {
+            font-family: Arial, sans-serif;
+            background-color: var(--gray-50);
             margin: 0;
-            padding: 0;
+            padding: 2rem;
+            color: var(--gray-800);
         }
 
-        .select-wrapper {
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--gray-800);
+        }
+
+        header a {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .application-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .application-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-image {
             width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
 
-        /* Select dropdown styling */
-        .select-wrapper select {
-            padding: 5px 10px;
-            font-size: 0.9rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 100%;
+        .card-content {
+            padding: 1.5rem;
         }
 
-        /* Center align empty row message */
+        .application-header {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .meta-info p {
+            margin: 0.5rem 0;
+        }
+
+        .actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .actions a, .actions button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .primary-button {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .primary-button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .danger-button {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .danger-button:hover {
+            background-color: #c0392b;
+        }
+
         .text-center {
             text-align: center;
-            color: #555;
-            font-size: 1rem;
-            padding: 10px;
+            padding: 2rem 0;
+            color: var(--gray-600);
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            table {
-                font-size: 0.9rem;
-            }
-
-            th, td {
-                padding: 10px 12px;
-            }
-
-            a {
-                width: auto;
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <h1>Liste des Candidatures</h1>
+    <div class="container">
+        <header>
+            <h1>Liste des Candidatures</h1>
+            <a href="{{ route('dashboard') }}">Retour au tableau de bord</a>
+        </header>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Titre de l'offre</th>
-                <th>Candidat</th>
-                <th>Status</th>
-                <th>Date de la candidature</th>
-                <th>Modifier le statut</th>
-                <th>CV</th>
-                <th>Lettre</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($applications as $application)
-                <tr>
-                    <td>{{ $application->jobOffer->title }}</td>
-                    <td>{{ $application->user->name }}</td>
-                    <td>
-                        <span class="badge badge-{{ $application->status === 'pending' ? 'warning' : ($application->status === 'accepted' ? 'success' : 'danger') }}">
-                            {{ ucfirst($application->status) }}
-                        </span>
-                    </td>
-                    <td>{{ $application->created_at->format('d/m/Y') }}</td>
-                    <td>
-                        <form action="{{ route('applications.update-status', $application->id) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <select name="status" onchange="this.form.submit()" class="form-control form-control-sm">
-                                <option value="pending" {{ $application->status === 'pending' ? 'selected' : '' }}>En attente</option>
-                                <option value="accepted" {{ $application->status === 'accepted' ? 'selected' : '' }}>Acceptée</option>
-                                <option value="rejected" {{ $application->status === 'rejected' ? 'selected' : '' }}>Refusée</option>
-                            </select>
-                        </form>
-                    </td>
-                    <td>
-                        @if($application->cv_path)
-                            <a href="{{ asset('storage/' . $application->cv_path) }}">Télécharger CV</a>
-                        @else
-                            Pas de CV
+        @if($applications->isEmpty())
+            <div class="text-center">Aucune candidature trouvée.</div>
+        @else
+            <div class="applications-grid">
+                @foreach($applications as $application)
+                    <div class="application-card">
+                        @if($application->jobOffer->image)
+                            <img src="{{ asset('storage/' . $application->jobOffer->image) }}" alt="{{ $application->jobOffer->title }}" class="card-image">
                         @endif
-                    </td>
-                    <td>
-                        @if($application->cover_letter_path)
-                            <a href="{{ asset('storage/' . $application->cover_letter_path) }}">Télécharger Lettre</a>
-                        @else
-                            Pas de lettre
-                        @endif
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="7" class="text-center">Aucune candidature trouvée.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-    <a href="{{ route('dashboard') }}" class="return-link">Retour au tableau de bord</a>
+                        <div class="card-content">
+                            <div class="application-header">{{ $application->jobOffer->title }}</div>
+                            <div class="meta-info">
+                                <p><strong>Candidat:</strong> {{ $application->user->name }}</p>
+                                <p><strong>Date de la candidature:</strong> {{ $application->created_at->format('d/m/Y') }}</p>
+                            </div>
+                            <div class="actions">
+                                @if($application->cv_path)
+                                    <a href="{{ asset('storage/' . $application->cv_path) }}" class="primary-button" target="_blank">Voir CV</a>
+                                @else
+                                    <span>Pas de CV</span>
+                                @endif
+                                @if($application->cover_letter_path)
+                                    <a href="{{ asset('storage/' . $application->cover_letter_path) }}" class="primary-button" target="_blank">Voir Lettre</a>
+                                @else
+                                    <span>Pas de lettre</span>
+                                @endif
+                                <form action="{{ route('applications.destroy', $application->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette candidature?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="danger-button">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </div>
 </body>
 </html>

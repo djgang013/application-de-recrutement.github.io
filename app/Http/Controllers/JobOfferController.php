@@ -43,7 +43,7 @@ class JobOfferController extends Controller
         'location' => $validated['location'],
         'company' => $validated['company'],
         'salary' => $validated['salary'],
-        'image' => $imagePath, // Save the image path
+        'image' => $imagePath,
         'user_id' => auth()->id(), // Add the logged-in user's ID
     ]);
 
@@ -124,6 +124,10 @@ public function update(Request $request, $id)
 
     // Redirect back to the job offers index with success message
     return redirect()->route('job-offers.index')->with('success', 'Offre d\'emploi mise à jour avec succès!');
+}
+public function show(JobOffer $jobOffer)
+{
+    return view('job_offers.show', compact('jobOffer'));
 }
 
 

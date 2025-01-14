@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Support\Facades\Storage;
-
 use App\Models\JobOffer;
 use App\Models\Application;
 use Illuminate\Http\Request;
@@ -137,5 +135,18 @@ public function update(Request $request, Application $application)
     $application->save();
 
     return redirect()->route('candidate.applications')->with('success', 'Application updated successfully.');
+}
+public function destroy(Application $application)
+{
+    if ($application->cv_path) {
+        Storage::disk('public')->delete($application->cv_path);
+    }
+    if ($application->cover_letter_path) {
+        Storage::disk('public')->delete($application->cover_letter_path);
+    }
+
+    $application->delete();
+
+    return redirect()->route('applications.index')->with('success', 'Application deleted successfully.');
 }
 }
