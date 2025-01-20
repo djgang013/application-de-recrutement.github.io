@@ -79,14 +79,6 @@ class ApplicationController extends Controller
 
 
 
-public function updateStatus(Request $request, Application $application)
-{
-    $this->authorize('update', $application); // Optional, for authorization
-
-    $application->update(['status' => $request->status]);
-
-    return redirect()->route('applications.index')->with('success', 'Application status updated successfully.');
-}
 
 public function edit(Application $application)
 {
