@@ -29,10 +29,7 @@ class User extends Authenticatable
         return $this->hasMany(CV::class);
     }
 
-    public function coverLetters()
-    {
-        return $this->hasMany(CoverLetter::class);
-    }
+  
 
     public function applications()
     {

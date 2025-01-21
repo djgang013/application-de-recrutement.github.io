@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CVController;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\CoverLetterController;
+
 
 Route::get('/', [AuthController::class, 'showLoginPage'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -30,17 +30,13 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:candidat')->group(function () {
         
         
-        Route::resource('cvs', CVController::class);
-        Route::resource('cover-letters', CoverLetterController::class);
+        
+ 
         Route::get('job-offers.index', [JobOfferController::class, 'index'])->name('jobs.index');
        
-        Route::get('/cvs/create', [CVController::class, 'create'])->name('cvs.create');
-        Route::post('/cvs/store', [CVController::class, 'store'])->name('cvs.store');
-        Route::resource('cvs', CVController::class)->except(['show', 'edit', 'update']);
-        Route::get('cvs/download/{user}', [CVController::class, 'download'])->name('cvs.download');
-        Route::resource('cover-letters', CoverLetterController::class)->except(['show']);
-        Route::get('/cover-letters/{coverLetter}/download', [CoverLetterController::class, 'download'])->name('cover-letters.download');
        
+       
+        
 Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
 Route::post('job-offers/apply/{jobOfferId}', [ApplicationController::class, 'apply'])->name('job-offers.apply');
 Route::get('/job-offers/{jobOffer}', [JobOfferController::class, 'show'])
