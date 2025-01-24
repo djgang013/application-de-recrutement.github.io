@@ -15,11 +15,10 @@ class JobOffer extends Model
         'company',
         'salary',
         'image',
-        'user_id', // Add user_id here
+        'user_id', 
         'recruiter_id',
     ];
 
-    // Define the relationship to the User model
     public function user()
     {
         return $this->belongsTo(User::class);

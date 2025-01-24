@@ -55,7 +55,7 @@ class ApplicationController extends Controller
         Application::create([
             'user_id' => Auth::id(),
             'job_offer_id' => $jobOfferId,
-            'status' => 'pending',
+            
             'cv_path' => $cvPath,  // Store CV path
             'cover_letter_path' => $coverLetterPath,
         ]);

@@ -23,11 +23,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Relationships
-    public function cvs()
-    {
-        return $this->hasMany(CV::class);
-    }
+    
+    
 
   
 
@@ -45,8 +42,7 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(JobOffer::class, Application::class, 'user_id', 'id', 'id', 'job_offer_id');
     }
-    // In App\Models\User
-
+   
 public function isRecruiter()
 {
     return $this->role === 'recruteur';

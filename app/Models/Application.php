@@ -17,10 +17,7 @@ class Application extends Model
         'cover_letter_path',
     ];
 
-    protected $attributes = [
-        'status' => 'pending'
-    ];
-
+  
     
 
     public function jobOffer()

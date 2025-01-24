@@ -1,86 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApplicationController;
 
-
+// Public routes
 Route::get('/', [AuthController::class, 'showLoginPage'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegisterPage'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::get('/guest', [JobOfferController::class, 'index'])->name('guest.jobs');
 
+// Authentication required routes
 Route::middleware('auth')->group(function () {
-   
-    // Dashboard route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('job-offers', [JobOfferController::class, 'index'])->name('job-offers.index');
-    Route::get('job-offers', [JobOfferController::class, 'index'])->name('job-offers.index');
-    // Logout route
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-});
-
-// Routes for Candidat (role: candidat)
-Route::middleware('auth')->group(function () {
+    
+    // Candidate routes
     Route::middleware('role:candidat')->group(function () {
-        
-        
-        
- 
         Route::get('job-offers.index', [JobOfferController::class, 'index'])->name('jobs.index');
-       
-       
-       
-        
-Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
-Route::post('job-offers/apply/{jobOfferId}', [ApplicationController::class, 'apply'])->name('job-offers.apply');
-Route::get('/job-offers/{jobOffer}', [JobOfferController::class, 'show'])
-        ->where('jobOffer', '[0-9]+') // Only allow numeric jobOffer IDs
-        ->name('job-offers.show');
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/my-applications', [CandidateController::class, 'myApplications'])->name('candidate.applications');
-    
-
-});
-
-Route::get('/applications/{application}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
-Route::put('/applications/{application}', [ApplicationController::class, 'update'])->name('applications.update');
-
-
-
-
-
+        Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
+        Route::post('job-offers/apply/{jobOfferId}', [ApplicationController::class, 'apply'])->name('job-offers.apply');
+        Route::get('/job-offers/{jobOffer}', [JobOfferController::class, 'show'])
+            ->where('jobOffer', '[0-9]+')
+            ->name('job-offers.show');
+        Route::get('/my-applications', [CandidateController::class, 'myApplications'])->name('candidate.applications');
+        Route::get('/applications/{application}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
+        Route::put('/applications/{application}', [ApplicationController::class, 'update'])->name('applications.update');
     });
-});
 
-// Routes for Recruteur (role: recruteur)
-Route::middleware('auth')->group(function () {
+    
+    // Recruiter routes
     Route::middleware('role:recruteur')->group(function () {
-        
-        Route::resource('job-offers', JobOfferController::class)->except(['index']);
-        Route::get('job-offers/create', [JobOfferController::class, 'create'])->name('job-offers.create');
-        Route::post('job-offers', [JobOfferController::class, 'store'])->name('job-offers.store');
-     
-        Route::get('job-offers', [JobOfferController::class, 'index'])->name('job-offers.index');
-        Route::resource('job-offers', JobOfferController::class)->except(['show', 'edit', 'update']);
-        Route::delete('job-offers/{jobOffer}', [JobOfferController::class, 'destroy'])->name('job-offers.destroy');
-        // Add the edit route for the job offers
-     Route::get('job-offers/{jobOffer}/edit', [JobOfferController::class, 'edit'])->name('job-offers.edit');
-Route::put('job-offers/{jobOffer}', [JobOfferController::class, 'update'])->name('job-offers.update');
-Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
-Route::patch('/applications/{application}/update-status', [ApplicationController::class, 'updateStatus'])->name('applications.update-status');
-
-Route::delete('/applications/{application}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
-
-
+        Route::resource('job-offers', JobOfferController::class)->except(['index', 'show']);
+        Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
+       
+        Route::delete('/applications/{application}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
     });
-    
 });
-

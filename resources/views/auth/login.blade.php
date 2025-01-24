@@ -216,7 +216,7 @@ body {
             </div>
 
             <a href="{{ route('guest.jobs') }}" class="btn btn-secondary">
-                Continue as Guest
+                Continue comme invité
             </a>
 
             <div class="register-link">

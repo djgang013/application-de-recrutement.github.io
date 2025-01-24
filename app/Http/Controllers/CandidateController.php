@@ -12,7 +12,7 @@ class CandidateController extends Controller
     {
         $user = Auth::user();  // Get the authenticated user
         $applications = Application::where('user_id', $user->id)
-            ->with('jobOffer')  // Assuming you have a relationship set up
+            ->with('jobOffer')  
             ->get();
 
         return view('candidate.my-applications', compact('applications'));

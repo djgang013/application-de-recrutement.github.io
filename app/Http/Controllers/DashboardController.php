@@ -24,7 +24,7 @@ class DashboardController extends Controller
             return redirect()->route('job-offers.index');
         }
 
-        // Default case if role doesn't match (optional)
+        // Default case if role doesn't match 
         return redirect()->route('login');
     }
 }
